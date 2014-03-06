@@ -1,0 +1,8 @@
+﻿<Window x:Class="LeapVoxSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="1024" Width="768" Background="Black">
+    <Canvas>
+        <Ellipse x:Name="ptr" Fill="Yellow" Height="30" Width="30"/>
+    </Canvas>
+</Window>
