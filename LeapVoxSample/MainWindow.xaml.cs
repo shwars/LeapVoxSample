@@ -1,4 +1,5 @@
 ﻿using Leap;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +31,16 @@ namespace LeapVoxSample
                 Interval = TimeSpan.FromSeconds(1 / 30)
             };
 
+        WaveOut WaveGen = new WaveOut();
+        PortamentoSineWaveOscillator Osc = new PortamentoSineWaveOscillator(44100,120);
+
         public MainWindow()
         {
             InitializeComponent();
             dt.Tick += dt_Tick;
             dt.Start();
+            WaveGen.Init(Osc);
+            WaveGen.Play();
         }
 
         void dt_Tick(object sender, EventArgs e)
@@ -46,6 +52,11 @@ namespace LeapVoxSample
                 // Устанавливаем координаты кружка
                 Canvas.SetLeft(ptr, 512 + f.TipPosition.x);
                 Canvas.SetTop(ptr, 768-f.TipPosition.y);
+                // Меняем высоту звука
+                var p = Math.Abs(f.TipPosition.y / 2);
+                var a = 255 - Math.Abs(f.TipPosition.x);
+                if (p >= 0 && p <= 150) Osc.Pitch = p;
+                if (a >= 0 && a <= 255) Osc.Amplitude = (short)a;
             }
         }
     }
